@@ -1,5 +1,10 @@
 import cv2
 import os
+from PyQt5.QtWidgets import QMessageBox
+# request
+import requests
+# url semilla apiRest
+urlApi = 'http://control-personal.test/api/'
 
 def mainRecognition(dataPath):
     imagePaths = os.listdir(dataPath)
@@ -55,6 +60,21 @@ def mainRecognition(dataPath):
             if result[1] < 70:
                 cv2.putText(frame,'{}'.format(imagePaths[result[0]]),(x,y-25),2,1.1,(0,255,0),1,cv2.LINE_AA)
                 cv2.rectangle(frame, (x,y),(x+w,y+h),(0,255,0),2)
+                
+                # # send code to api
+                # print(imagePaths[result[0]])
+                # form = {
+                #     'code': imagePaths[result[0]]
+                # }
+                # # envios de datos a la ApiRest
+                # x = requests.post(urlApi+'asistencia-empleado', data = form)
+                # if x.status_code == 400:
+                #     QMessageBox.about(self, "Error", "Error con los tipos de datos, por favor revisa los datos nuevamente.")
+                # if x.status_code == 500:
+                #     QMessageBox.about(self, "Error", "Problemas con el servidor, por favor vuelva a intentarlo mas tarde.")
+                # if x.status_code == 200:
+                #     QMessageBox.about(self, "Bien hecho", "Empleado registrado con éxito.")
+                # # end send
             else:
                 cv2.putText(frame,'Desconocido',(x,y-20),2,0.8,(0,0,255),1,cv2.LINE_AA)
                 cv2.rectangle(frame, (x,y),(x+w,y+h),(0,0,255),2)
@@ -66,3 +86,5 @@ def mainRecognition(dataPath):
 
     cap.release()
     cv2.destroyAllWindows()
+
+# mainRecognition('Data')

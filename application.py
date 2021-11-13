@@ -70,8 +70,8 @@ class MyApp(QMainWindow):
 
         # boton de registro de empleado
         self.ui.btn_registrar.clicked.connect(self.registroUsuario)
-        # QtCore.QObject.connect(self.ui.btnTraining, QtCore.SIGNAL("clicked()"), self.trainigModel)
-        # QtCore.QObject.connect(self.ui.btnRecognition, QtCore.SIGNAL("clicked()"), self.recognitionUser)
+        self.ui.btn_entrenar.clicked.connect(self.entrenandoModelo)
+        self.ui.btn_iniciar.clicked.connect(self.iniciarReconocimiento)
     
     # funcion para el registro de empleado
     def registroUsuario(self):
@@ -134,20 +134,14 @@ class MyApp(QMainWindow):
             btn.clicked.connect(lambda checked, arg=empleado['cod_empleado']: self.captureUser(arg))
             self.ui.tabla_empleados.setCellWidget(row, 4, btn)
     def captureUser(self, code):
-        print(code)
-        # nameUser = self.ui.name.text()
-        # savePerson(nameUser, 'D:/project-python/RECONOCIMIENTO FACIAL/Data')
+        # print(code)
         savePerson(code, 'Data')
-        # self.ui.successTxt.setText('Se guardo correctamente al empleado ' + nameUser)
-    # def trainigModel(self):
-    #     # mainTrainig('D:/project-python/RECONOCIMIENTO FACIAL/Data')
-    #     mainTrainig('/Data')
-    #     self.ui.trainingTxt.setText('Entrado para reconocer')
-    # def recognitionUser(self):
-    #     # mainRecognition('D:/project-python/RECONOCIMIENTO FACIAL/Data')
-    #     mainRecognition('/Data')
-    #     self.ui.successTxt.setText('')
-    #     self.ui.trainingTxt.setText('')
+        QMessageBox.about(self, "Bien hecho", "Captura de rostro con éxito.")
+    def entrenandoModelo(self):
+        mainTrainig('Data')
+        QMessageBox.about(self, "Realizado", "Procesamiento de imagenes con éxito.")
+    def iniciarReconocimiento(self):
+        mainRecognition('Data')
 
 
 if __name__ =="__main__":
